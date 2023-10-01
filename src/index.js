@@ -23,61 +23,49 @@ function formatDate(date) {
     return `${day} ${hours}:${minutes}`;
   }
   
-  function search(event) {
-    event.preventDefault();
-    let cityElement = document.querySelector("#city");
-    let cityInput = document.querySelector("#city-input");
-    cityElement.innerHTML = cityInput.value;
-  }
-  
-  function convertToFahrenheit(event) {
-    event.preventDefault();
-    let temperatureElement = document.querySelector("#temperature");
-    temperatureElement.innerHTML = 66;
-  }
-  
-  function convertToCelsius(event) {
-    event.preventDefault();
-    let temperatureElement = document.querySelector("#temperature");
-    temperatureElement.innerHTML = 19;
-  }
-  
-  
   let dateElement = document.querySelector("#date");
   let currentTime = new Date();
   dateElement.innerHTML = formatDate(currentTime);
   
+  function displayWeather(response) {
+    document.querySelector("#city").innerHTML = response.data.name;
+    document.querySelector("#temp").innerHTML = Math.round(
+      response.data.main.temp
+    );
   
-  let searchForm = document.querySelector("#search-form");
-  searchForm.addEventListener("submit", search);
-  
-  
-  let fahrenheitLink = document.querySelector("#fahrenheit-link");
-  fahrenheitLink.addEventListener("click", convertToFahrenheit);
-  
-  let celsiusLink = document.querySelector("#celsius-link");
-  celsiusLink.addEventListener("click", convertToCelsius);
-  
-  function displayWeather(response){
-    let temperature= Math.round(response.data.main.temp);
-    let temperatureId= document.querySelector("#temp");
-    temperatureId.innerHTML=`${temperature}`;
-    let cityId= document.querySelector("#city");
-    cityId.innerHTML = response.data.name;
-    let weatherDes = document.querySelector("#weatherDes");
-    weatherDes.innerHTML = response.data.weather[0].description;
-    
+    document.querySelector("#humidity").innerHTML = response.data.main.humidity;
+    document.querySelector("#wind").innerHTML = Math.round(
+      response.data.wind.speed
+    );
+    document.querySelector("#weatherDes").innerHTML =
+      response.data.weather[0].description;
+  }
+  function searchCity(city) {
+    let apiKey = "5354b60afda2b7800186c06153932396";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(displayWeather);
+  }
+  function handleSubmit(event) {
+    event.preventDefault();
+    let city = document.querySelector("#city-input").value;
+    searchCity(city);
   }
   function getPosition(position) {
     let apiKey = "5354b60afda2b7800186c06153932396";
-    let lat = position.coords.latitude;
-    let lon = position.coords.longitude;
-    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`;
+  
     axios.get(url).then(displayWeather);
   }
-  function getCurrentPosition(event){
+  function getCurrentLocation(event) {
     event.preventDefault();
     navigator.geolocation.getCurrentPosition(getPosition);
-  
   }
+  
+  let searchForm = document.querySelector("#search-form");
+  searchForm.addEventListener("submit", handleSubmit);
+  
+  let currentLocationButton = document.querySelector("#current-location-button");
+  currentLocationButton.addEventListener("click", getCurrentLocation);
+  
+  searchCity("Pretoria");
   
