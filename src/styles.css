@@ -91,3 +91,6 @@ div{
 p{
     text-align: center;
 }
+.weather-temp .active{
+  color: black;
+}
