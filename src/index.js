@@ -28,6 +28,8 @@ function formatDate(date) {
   dateElement.innerHTML = formatDate(currentTime);
   function displayWeather(response) {
     console.log(response);
+
+    celciusTemp = response.data.temperature.current;
     
     document.querySelector("#city").innerHTML = response.data.city;
     document.querySelector("#temp").innerHTML = Math.round(response.data.temperature.current);
@@ -36,6 +38,7 @@ function formatDate(date) {
     document.querySelector("#wind").innerHTML = Math.round(response.data.wind.speed);
     document.querySelector("#icon").setAttribute("src",`http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`)
   }
+
   function searchCity(city) {
     let apiKey = "9o3f07553f5a06d0b934dt0775693144";
     let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
@@ -53,10 +56,25 @@ function formatDate(date) {
     axios.get(url).then(displayWeather);
   }
   
+ 
+  let fahrenheitLink = document.querySelector("#fahrenheit-link");
+  let celsiusLink = document.querySelector("#celsius-link");
+ function displayFahrenheitTemp(event){
+   event.preventDefault();
+   let fahrenheitTemp =(celciusTemp* 9) / 5 + 32 ;
+   let temperatureElement = document.querySelector("#temp");
+   temperatureElement.innerHTML = Math.round(fahrenheitTemp);
+ }
+ function displayCelsiusTemp(event){
+   event.preventDefault();
+   let temperatureElement = document.querySelector("#temp");
+   temperatureElement.innerHTML = Math.round(celciusTemp);
+
+ }
+  fahrenheitLink.addEventListener("click", displayFahrenheitTemp);
+  celsiusLink.addEventListener("click",displayCelsiusTemp);
+  let celciusTemp = null;
   let searchForm = document.querySelector("#search-form");
   searchForm.addEventListener("submit", handleSubmit);
   
-  
-  
   searchCity("Pretoria");
-  

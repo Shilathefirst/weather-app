@@ -28,7 +28,9 @@
     margin: 20px auto;
     border-radius: 10px;
     max-width: 600px;
-    background-color: #fff;
+    background-color:hsla(0,0%,98%,.88);
+    
+    
   }
   
   .weather-icon {
@@ -51,10 +53,13 @@
   
   .search-form {
     margin-bottom: 20px;
+    background-color:hsla(0,0%,98%,.88);
+
   }
   
   .form-control {
     padding: 10px;
+
   }
   .btn {
     display: inline-block;
@@ -71,11 +76,7 @@
     border-radius: 0.25rem;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
-.btn-success {
-  color: #fff;
-  background-color: #28a745;
-  border-color: #28a745;
-}
+
 .w-100 {
   width: 100%!important;
 }
