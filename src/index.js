@@ -26,23 +26,19 @@ function formatDate(date) {
   let dateElement = document.querySelector("#date");
   let currentTime = new Date();
   dateElement.innerHTML = formatDate(currentTime);
-  
   function displayWeather(response) {
-    document.querySelector("#city").innerHTML = response.data.name;
-    document.querySelector("#temp").innerHTML = Math.round(
-      response.data.main.temp
-    );
-  
-    document.querySelector("#humidity").innerHTML = response.data.main.humidity;
-    document.querySelector("#wind").innerHTML = Math.round(
-      response.data.wind.speed
-    );
-    document.querySelector("#weatherDes").innerHTML =
-      response.data.weather[0].description;
+    console.log(response);
+    
+    document.querySelector("#city").innerHTML = response.data.city;
+    document.querySelector("#temp").innerHTML = Math.round(response.data.temperature.current);
+    document.querySelector("#weatherDes").innerHTML = response.data.condition.description;
+    document.querySelector("#humidity").innerHTML = response.data.temperature.humidity;
+    document.querySelector("#wind").innerHTML = Math.round(response.data.wind.speed);
+    document.querySelector("#icon").setAttribute("src",`http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`)
   }
   function searchCity(city) {
-    let apiKey = "5354b60afda2b7800186c06153932396";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    let apiKey = "9o3f07553f5a06d0b934dt0775693144";
+    let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
     axios.get(apiUrl).then(displayWeather);
   }
   function handleSubmit(event) {
@@ -51,21 +47,16 @@ function formatDate(date) {
     searchCity(city);
   }
   function getPosition(position) {
-    let apiKey = "5354b60afda2b7800186c06153932396";
-    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`;
+    let apiKey = "9o3f07553f5a06d0b934dt0775693144";
+    let url = `https://api.shecodes.io/weather/v1/current?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`;
   
     axios.get(url).then(displayWeather);
-  }
-  function getCurrentLocation(event) {
-    event.preventDefault();
-    navigator.geolocation.getCurrentPosition(getPosition);
   }
   
   let searchForm = document.querySelector("#search-form");
   searchForm.addEventListener("submit", handleSubmit);
   
-  let currentLocationButton = document.querySelector("#current-location-button");
-  currentLocationButton.addEventListener("click", getCurrentLocation);
+  
   
   searchCity("Pretoria");
   

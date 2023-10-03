@@ -44,7 +44,6 @@
             value="Search"
             class="form-control btn btn-primary shadow-sm w-100"
             />
-            <button class="btn btn-success w-100" id="current-location-button"> Current</button>
 
 
             </div>
@@ -68,8 +67,9 @@
           <div class="col-6">
             <div class="clearfix">
               <img
-                src="https://static.vecteezy.com/system/resources/previews/022/123/561/original/weather-app-icon-outline-style-isolated-on-white-background-free-vector.jpg"
+                src=" "
                 alt="Cloudy icon"
+                id="icon"
                 class="weather-icon float-left"
               />
               <div class="float-left">
@@ -83,14 +83,11 @@
           </div>
           <div class="col-6">
             <ul>
-              <li id="perception">
-                Precipitation: 0%
+              <li> Humidity: <span id="humidity"></span>%
+                 
               </li>
-              <li id="humidity">
-                Humidity: 77%
-              </li id="wind">
-              <li>
-                Wind: 8 km/h
+              <li> Wind: <span id="wind"></span>km/h
+                
               </li>
             </ul>
           </div>
@@ -102,8 +99,8 @@
 
 
     </script>
-    <h6>
+    <p>
     <a href="https://github.com/Shilathefirst/weather-app" >Open-source code</a> by Ntokozo Shila Ditshego
-    </h6>
+    </p>
   </body>
 </html>

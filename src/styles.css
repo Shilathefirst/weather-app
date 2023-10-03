@@ -40,7 +40,7 @@
   .temperature {
     color: rgb(33, 33, 33);
     font-size: 64px;
-    font-weight: 400;
+    font-weight: 700;
     line-height: 1;
   }
   
@@ -87,6 +87,6 @@
 div{
   display: block;
 }
-h6{
+p{
     text-align: center;
 }
