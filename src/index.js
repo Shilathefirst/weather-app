@@ -77,4 +77,35 @@ function formatDate(date) {
   let searchForm = document.querySelector("#search-form");
   searchForm.addEventListener("submit", handleSubmit);
   
+  function displayForecast(){
+    let forecastElement = document.querySelector("#forecast");
+
+    let forecastHTML = `<div class="row">`;
+    let days =["Thu","Fri","Sat","Sun","Mon"];
+    days.forEach(function(day){
+      forecastHTML = forecastHTML + `
+      
+      <div class="col-2">
+        <div class="weather-forecast-date">${day}</div>
+          <img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-night.png" alt=" " width="35" />
+         <div class="weather-forecast-temp">
+          <span class="weather-forecast-temp-max">
+            20&deg
+          </span>
+          <span class="weather-forecast-temp-min">
+            14&deg
+          </span>
+       
+         </div>
+        
+        </div>
+     
+    
+   `;
+    });
+   forecastHTML = forecastHTML + ` </div>`;
+   forecastElement.innerHTML = forecastHTML;
+  }
   searchCity("Pretoria");
+
+  displayForecast();
