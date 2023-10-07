@@ -26,6 +26,14 @@ function formatDate(date) {
   let dateElement = document.querySelector("#date");
   let currentTime = new Date();
   dateElement.innerHTML = formatDate(currentTime);
+  
+  function getForecast(coordinates){
+    console.log(coordinates);
+    let apiKey = "9o3f07553f5a06d0b934dt0775693144";
+    let apiUrl =`https://api.shecodes.io/weather/v1/forecast?lon=${coordinates.longitude}&lat=${coordinates.latitude}&key=${apiKey}&units=metric`;
+   console.log(apiUrl);
+   axios.get(apiUrl).then(displayForecast);
+  }
   function displayWeather(response) {
     console.log(response);
 
@@ -37,6 +45,7 @@ function formatDate(date) {
     document.querySelector("#humidity").innerHTML = response.data.temperature.humidity;
     document.querySelector("#wind").innerHTML = Math.round(response.data.wind.speed);
     document.querySelector("#icon").setAttribute("src",`http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${response.data.condition.icon}.png`)
+     getForecast(response.data.coordinates);
   }
 
   function searchCity(city) {
@@ -76,24 +85,34 @@ function formatDate(date) {
   let celciusTemp = null;
   let searchForm = document.querySelector("#search-form");
   searchForm.addEventListener("submit", handleSubmit);
-  
-  function displayForecast(){
+  function formatDay(timestamp){
+    let date = new Date(timestamp * 1000);
+    let day = date.getDay();
+    let days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+
+    return days[day];
+  }
+  function displayForecast(response){
+    let forecast= response.data.daily;
+    console.log(response.data.daily);
     let forecastElement = document.querySelector("#forecast");
 
     let forecastHTML = `<div class="row">`;
     let days =["Thu","Fri","Sat","Sun","Mon"];
-    days.forEach(function(day){
+    forecast.forEach(function(forecastDay,index){
+      
+      if(index<6){
       forecastHTML = forecastHTML + `
       
       <div class="col-2">
-        <div class="weather-forecast-date">${day}</div>
-          <img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/broken-clouds-night.png" alt=" " width="35" />
+        <div class="weather-forecast-date">${formatDay(forecastDay.time)}</div>
+          <img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${forecastDay.condition.icon}.png" alt=" " width="35" />
          <div class="weather-forecast-temp">
-          <span class="weather-forecast-temp-max">
-            20&deg
+          <span class="weather-forecast-temp-max">${Math.round(forecastDay.temperature.maximum)}&deg
           </span>
           <span class="weather-forecast-temp-min">
-            14&deg
+            ${Math.round(forecastDay.temperature.minimum)}&deg
           </span>
        
          </div>
@@ -102,10 +121,10 @@ function formatDate(date) {
      
     
    `;
-    });
+    }});
    forecastHTML = forecastHTML + ` </div>`;
    forecastElement.innerHTML = forecastHTML;
   }
   searchCity("Pretoria");
 
-  displayForecast();
+  
