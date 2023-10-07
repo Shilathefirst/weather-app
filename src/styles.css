@@ -1,9 +1,9 @@
 
 
   h1 {
-    color: #7c7c7c;
+    color: orangered;
     font-size: 24px;
-    font-weight: 100;
+    font-weight: 500;
     line-height: 28px;
     margin: 0;
   }
@@ -20,6 +20,9 @@
     height: 19px;
     line-height: 1;
     list-style: none;
+    font-family: arial,sans-serif;
+
+    
   }
   
   .weather-app {
@@ -93,4 +96,27 @@ p{
 }
 .weather-temp .active{
   color: black;
+ 
+}
+.weather-forecast-temp-min{
+  opacity: 0.6;
+  font-size: 16px;
+  
+}
+.col-2{
+  text-align: center;
+}
+.col-6{
+
+  
+}
+.weather-forecast-temp{
+  color:orangered ;
+  font-size: arial,sans-serif;
+}
+.humidity{
+  color:orangered;
+}
+.wind{
+  color: orangered;
 }
